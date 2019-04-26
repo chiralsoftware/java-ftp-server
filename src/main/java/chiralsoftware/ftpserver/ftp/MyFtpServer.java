@@ -1,7 +1,8 @@
 package chiralsoftware.ftpserver.ftp;
 
-import chiralsoftware.ftpserver.ftplet.MyStor;
-import chiralsoftware.ftpserver.ftplet.SimpleFtplet;
+import chiralsoftware.ftpserver.ftplet.EmptyList;
+import chiralsoftware.ftpserver.ftplet.EmptyMlsd;
+import chiralsoftware.ftpserver.ftplet.StreamStor;
 import org.apache.ftpserver.listener.ListenerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -49,9 +50,11 @@ public class MyFtpServer {
         connectionConfigFactory.setMaxLogins(maxLogin);
         connectionConfigFactory.setMaxThreads(maxThreads);
         serverFactory.setConnectionConfig(connectionConfigFactory.createConnectionConfig());
-        serverFactory.setFtplets(Map.of("demo", new SimpleFtplet()));
+//        serverFactory.setFtplets(Map.of("demo", new SimpleFtplet()));
         final CommandFactoryFactory cff = new CommandFactoryFactory();
-        cff.addCommand("STOR", new MyStor());
+        cff.addCommand("STOR", new StreamStor());
+        cff.addCommand("LIST", new EmptyList());
+        cff.addCommand("MLSD", new EmptyMlsd());
         serverFactory.setCommandFactory(cff.createCommandFactory());
 
         final ListenerFactory listenerFactory = new ListenerFactory();

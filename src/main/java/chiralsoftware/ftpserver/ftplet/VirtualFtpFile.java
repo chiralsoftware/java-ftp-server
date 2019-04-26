@@ -144,5 +144,9 @@ public final class VirtualFtpFile implements FtpFile {
             throw new IOException("Couldn't find the MD5 algorithm, your JRE is broken", nsae);
         }
     }
-    
+
+    @Override
+    public String toString() {
+        return "VirtualFtpFile{" + "fileName=" + fileName + '}';
+    }
 }
